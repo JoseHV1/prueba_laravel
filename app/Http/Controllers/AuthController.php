@@ -9,20 +9,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
+use App\Http\Requests\UserRequest;
 
 class AuthController extends Controller
 {
-    public function register(Request $request){
-        $validator = \Validator::make($request->all(), [
-            'name' => 'required|string',
-            'email' => 'required|string|email',
-            'password' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
+    // Creation of users
+    public function register(UserRequest $request){
         DB::beginTransaction();
         try {
             User::create([
@@ -46,15 +38,14 @@ class AuthController extends Controller
         }
     }
 
+    // Login
     public function login(Request $request){
         $validator = \Validator::make($request->all(), [
             'email' => 'required|string|email|exists:users,email',
             'password' => 'required',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
+        if ($validator->fails()) return response()->json($validator->errors(), 422);
 
         try {
             if(Auth::attempt(["email" => $request->email, "password" => $request->password])){
@@ -73,19 +64,23 @@ class AuthController extends Controller
 
             return response()->json([
                 'message' => 'Erroneous Credentials'
-            ], 402);
+            ], 422);
 
         } catch (\Throwable $th) {
-            return $th;
             return response()->json([
-                'message' => 'Ocurrió un error'
-            ], 400);
+                'message' => 'An error occurred'
+            ], 500);
         }
     }
 
-    public function unauthenticated(){
-        return response()->json([
-            'message' => 'Unauthorized'
-        ], 401);
+    // Logout
+    public function logout(Request $request){
+        $token = substr($request->header('Authorization'), 7);
+        $userData = User::where('token', $token)->update([
+            'token' => null,
+            'expires_at' => null,
+        ]);
+
+        return response()->json([], 200);
     }
 }

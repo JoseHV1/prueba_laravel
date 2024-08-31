@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\Status;
 
 class Customer extends Model
 {
@@ -12,6 +13,10 @@ class Customer extends Model
     public $timestamps = false;
 
     protected $table = 'customers';
+
+    protected $casts = [
+        'status' => Status::class
+    ];
 
 	protected $fillable = [
 		'dni',
@@ -24,14 +29,4 @@ class Customer extends Model
 		'date_reg',
 		'status',
 	];
-
-    public function commune()
-    {
-        return $this->belongsTo(Commune::class, 'id_com', 'id_com');
-    }
-
-    public function region()
-    {
-        return $this->belongsTo(Region::class, 'id_reg', 'id_reg');
-    }
 }

@@ -35,12 +35,16 @@ Prueba Laravel Desarrollador Jose Hernandez
   php artisan serve
 ```
 
+#### 6. Te dejo adjunto un link a una coleccion de Postman con los enpoints
+```bash
+    https://drive.google.com/file/d/1wbxzrKmCuIEDO3QKQM_8FSLnLhiPKj6h/view?usp=sharing
+```
+
 
 # 🚀 Hola, Soy Jose Hernandez! 👋
 
 Desarrollador Fullstack, con 3+ años de experiencia en el desarrollo de sistemas web, apasionado por la programacion, innovacion y el constante aprendizaje de forma autodidacta.
 
 ## 🔗 Nota
-```bash
-  La mayor parte de la prueba esta realizada, solo falto la parte relacionada con el middleware la cual no se pudieron solucionar los problemas presentados alli, de resto si estan completas las consideraciones como los endpoint solicitados, en caso de alguna sugerencia o correccion que me desees dar puedes enviarmela al correo devjh19@gmail.com
-```
+En caso de alguna sugerencia o correccion que me desees dar puedes enviarmela al correo devjh19@gmail.com 
+Agradeceria de todo corazon cualquier feedback que me desees dar ya que me ayudara a mi crecimiento personal y profesional

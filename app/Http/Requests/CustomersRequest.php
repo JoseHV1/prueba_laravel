@@ -6,6 +6,8 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
+use App\Enums\Status;
+use Illuminate\Validation\Rules\Enum;
 
 class CustomersRequest extends FormRequest
 {
@@ -25,6 +27,7 @@ class CustomersRequest extends FormRequest
             'last_name' => 'required|string|max:45',
             'address' => 'nullable|string|max:255',
             'date_reg' => 'required|date',
+            'status' => ['required', new Enum(Status::class)]
         ];
     }
 

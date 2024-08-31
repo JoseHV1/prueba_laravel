@@ -11,6 +11,7 @@ use App\Models\Log;
 
 class CustomerController extends Controller
 {
+    // Search of customers
     public function index(Request $request)
     {
         try {
@@ -44,6 +45,7 @@ class CustomerController extends Controller
         }
     }
 
+    // Save customers
     public function store(CustomersRequest $request)
     {
         $existRelation = Commune::join('regions', 'regions.id_reg', 'communes.id_reg')
@@ -60,7 +62,17 @@ class CustomerController extends Controller
 
         DB::beginTransaction();
         try {
-            Customer::create($request->all());
+            Customer::create([
+                'dni' => $request->dni,
+                'id_reg' => $request->id_reg,
+                'id_com' => $request->id_com,
+                'email' => $request->email,
+                'name' => $request->name,
+                'last_name' => $request->last_name,
+                'address' => $request->address,
+                'date_reg' => $request->date_reg,
+                'status' => $request->status
+            ]);
 
             DB::commit();
             return response()->json([
@@ -88,6 +100,7 @@ class CustomerController extends Controller
         //
     }
 
+    // Delete customers
     public function destroy(string $dni)
     {
         $customer = Customer::where('dni', $dni)->where('status', '!=', 'trash');

@@ -5,12 +5,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 
-// TO DO the middleware is not working properly that's why this comment is made
-// Route::middleware(['auth'])->group(function () {
+Route::middleware(['verifyTokenUser'])->group(function () {
+    // Route logout
+    Route::post('logout', [AuthController::class, 'logout']);
+
     // Routes of Customers
     Route::apiResource('customers', CustomerController::class);
-// });
+});
 
-Route::post('login', [AuthController::class, 'login']);
-Route::post('register', [AuthController::class, 'register']);
-Route::get('unauthenticated', [AuthController::class, 'unauthenticated'])->name('login');
+Route::middleware(['guest'])->group(function () {
+    // Route login
+    Route::post('login', [AuthController::class, 'login']);
+
+    // Route register users
+    Route::post('register', [AuthController::class, 'register']);
+});
